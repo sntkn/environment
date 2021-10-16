@@ -29,29 +29,6 @@ font: ricty
 theme: Ocean Dark Extended
 font: ricty
 
-Workspace Setting
-
-```json
-{
-  "editor.formatOnSave": true,
-  "[ruby]": {
-    "editor.formatOnSave": true
-  },
-  "ruby.lint": {
-    "rubocop": true
-  },
-  "python.pythonPath": <which python path>,
-  "python.linting.flake8Enabled": true,
-  "python.formatting.provider": "black",
-  "[python]": {
-    "editor.codeActionsOnSave": {
-      "source.organizeImports": true
-    }
-  },
-  "python.linting.mypyEnabled": true
-}
-```
-
 ## Programing language
 
 anyenv
@@ -68,4 +45,5 @@ anyenv
 ### ruby
 
 - rbenv
+- bundler
 - rubocop

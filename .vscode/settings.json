@@ -1,0 +1,28 @@
+{
+  "[ruby]": {
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2
+  },
+  "ruby.format": "rubocop",
+  "ruby.interpreter.commandPath": "~/.anyenv/envs/rbenv/shims/ruby",
+  "ruby.useBundler": true,
+  "ruby.lint": {
+    "reek": true,
+    "rubocop": true,
+    "ruby": true,
+    "fasterer": true,
+    "debride": true,
+    "ruby-lint": true
+  },
+  "python.pythonPath": "~/.local/share/virtualenvs/paiza-7o7YsACw/bin/python",
+  "python.linting.flake8Enabled": true,
+  "python.formatting.provider": "black",
+  "[python]": {
+    "editor.formatOnSave": true,
+    "editor.tabSize": 4,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    }
+  },
+  "python.linting.mypyEnabled": true,
+}
