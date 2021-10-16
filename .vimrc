@@ -96,11 +96,11 @@ set hidden
 "バックアップファイルを作成しない
 set nobackup
 "バックアップファイルのディレクトリ指定
-set backupdir=$HOME/.vim/backup
+"set backupdir=$HOME/.vim/backup
 "アンドゥファイルを作成しない
 set noundofile
 "アンドゥファイルのディレクトリ指定
-set undodir=$HOME/.vim/backup
+"set undodir=$HOME/.vim/backup
 "スワップファイルを作成しない
 set noswapfile
 

@@ -11,40 +11,61 @@
 
 - iterm2
 - zsh
-- prezeto
+- zinit
 - color: iceberg
 - font: ricty for powerline
 
 https://www.te-nu.com/entry/2018/08/30/214757
 
-# Editor
-## vim
+## Editor
+
+### vim
+
 color: iceberg
 font: ricty
 
-## vscode
+### vscode
+
 theme: Ocean Dark Extended
 font: ricty
 
-# Programing language
+Workspace Setting
 
-## php
-brew php@7.1
-composer
+```json
+{
+  "editor.formatOnSave": true,
+  "[ruby]": {
+    "editor.formatOnSave": true
+  },
+  "ruby.lint": {
+    "rubocop": true
+  },
+  "python.pythonPath": <which python path>,
+  "python.linting.flake8Enabled": true,
+  "python.formatting.provider": "black",
+  "[python]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+    }
+  },
+  "python.linting.mypyEnabled": true
+}
+```
 
-## ruby
-2.3.7
-- rbenv
-- bundler
-- docsはYARDかrDocs
+## Programing language
 
-## python 
-3.6 inc anaconda
+anyenv
+
+### Python
+
 - pyenv
-- pip
+- pipenv
+  - mypy
+  - black
+  - isort
+  - flake8
 
-## node
-デバッグ環境はglobalでインストール
-nodebrew
-- nodemon -g
-- jslint -g
+### ruby
+
+- rbenv
+- rubocop
