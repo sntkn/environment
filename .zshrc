@@ -32,6 +32,7 @@ setopt hist_expand # 補完時にヒストリを自動的に展開する
 setopt inc_append_history # 履歴をインクリメンタルに追加
 
 
+
 source "$HOME/.zinit/bin/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
@@ -53,63 +54,45 @@ setopt promptsubst
 zinit snippet OMZT::gnzh
 
 
-zinit load zdharma/history-search-multi-word
-zinit ice compile"*.lzui" from"notabug"
-zinit load zdharma/zui
-zinit ice from"gh-r" as"program"; zinit load junegunn/fzf-bin
-zinit ice from"gh-r" as"program" mv"docker* -> docker-compose" bpick"*linux*"; zinit load docker/compose
-zinit ice as"program" atclone"rm -f src/auto/config.cache; ./configure" atpull"%atclone" make pick"src/vim"
-zinit ice wait'!0'; zinit light vim/vim
-zinit ice wait'!0'; zinit ice as"program" pick"$ZPFX/bin/git-*" make"PREFIX=$ZPFX"
-zinit ice wait'!0'; zinit light tj/git-extras
-#zinit ice wait'!0'; zinit light zsh-users/zsh-autosuggestions
-#zinit ice wait'!0'; zinit light zdharma/fast-syntax-highlighting
+# 補完
+zinit light zsh-users/zsh-autosuggestions
+
+# シンタックスハイライト
+zinit light zdharma-continuum/fast-syntax-highlighting
+
+# Ctrl+r でコマンド履歴を検索
+zinit light zdharma-continuum/history-search-multi-word
+
+# pure theme
 zinit ice pick"async.zsh" src"pure.zsh"; zinit light sindresorhus/pure
+
 # Gitの変更状態がわかる ls。ls の代わりにコマンド `k` を実行するだけ。
-#zplugin ice pick'k.sh'
-#zinit ice supercrabtree/k
-zinit ice wait'!0'; zinit load "supercrabtree/k"
+zinit light supercrabtree/k
 
+# anyframeのセットアップ
+zinit light mollifier/anyframe
 
-zinit wait lucid for \
-  atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
-    zdharma/fast-syntax-highlighting \
-  blockf \
-    zsh-users/zsh-completions \
-  atload"!_zsh_autosuggest_start" \
-    zsh-users/zsh-autosuggestions
+# Ctrl+x -> b
+# peco でディレクトリの移動履歴を表示
+bindkey '^xb' anyframe-widget-cdr
+autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+add-zsh-hook chpwd chpwd_recent_dirs
 
-# history 
-function select-history() {
-    local tac
-    if which tac > /dev/null; then
-        tac="tac"
-    else
-        tac="tail -r"
-    fi
-    BUFFER=$(fc -l -n 1 | eval $tac | fzf --query "$LBUFFER")
-    CURSOR=$#BUFFER
-    zle -R -c
-}
-zle -N select-history
-bindkey '^r' select-history
+# Ctrl+x -> r
+# peco でコマンドの実行履歴を表示
+bindkey '^xr' anyframe-widget-execute-history
 
-zstyle ':completion:*' menu select
+# Ctrl+x -> Ctrl+b
+# peco でGitブランチを表示して切替え
+bindkey '^x^b' anyframe-widget-checkout-git-branch
 
+# Ctrl+x -> g
+# GHQでクローンしたGitリポジトリを表示
+bindkey '^xg' anyframe-widget-cd-ghq-repository
 
-# ghq
-function ghq-src () {
-  local selected_dir=$(ghq list -p | fzf --query "$LBUFFER")
-  if [ -n "$selected_dir" ]; then
-    BUFFER="cd ${selected_dir}"
-    zle accept-line
-  fi
-  zle clear-screen
-}
-zle -N ghq-src
-bindkey '^l' ghq-src
-
-# 現在の作業リポジトリをブラウザで表示する
-alias hbr='hub browse'
+# brew doctorのエラー回避
+alias brew="PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin brew"
+# alias brew="PATH=/opt/homebrew/bin brew" # ARM
 
 eval "$(anyenv init -)"
+
