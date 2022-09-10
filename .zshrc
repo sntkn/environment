@@ -1,6 +1,9 @@
-export PATH="/usr/local/sbin:$PATH"↲
-alias la='ls -la'
-alias ll='ls -la'
+# Fig pre block. Keep at the top of this file.
+[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && . "$HOME/.fig/shell/zshrc.pre.zsh"
+#export PATH="/usr/local/sbin:$PATH"↲
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+#alias la='lsd -la'
+alias ll='lsd -la'
 
 setopt nonomatch
 
@@ -31,8 +34,6 @@ setopt hist_expire_dups_first # 古い履歴を削除する必要がある場合
 setopt hist_expand # 補完時にヒストリを自動的に展開する
 setopt inc_append_history # 履歴をインクリメンタルに追加
 
-
-
 source "$HOME/.zinit/bin/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
@@ -40,19 +41,8 @@ autoload -Uz _zinit
 setopt auto_cd
 setopt no_beep
 
-
-# Preztoのセットアップ
-zinit snippet PZT::modules/helper/init.zsh
-
-# oh-my-zshのセットアップ
-zinit snippet OMZL::git.zsh
-zinit snippet OMZP::git # <- なんかおまじないらしい
-zinit cdclear -q
-
 # プロンプトのカスタマイズ
 setopt promptsubst
-zinit snippet OMZT::gnzh
-
 
 # 補完
 zinit light zsh-users/zsh-autosuggestions
@@ -63,24 +53,21 @@ zinit light zdharma-continuum/fast-syntax-highlighting
 # Ctrl+r でコマンド履歴を検索
 zinit light zdharma-continuum/history-search-multi-word
 
-# pure theme
-zinit ice pick"async.zsh" src"pure.zsh"; zinit light sindresorhus/pure
+# .env
+zinit light johnhamelink/env-zsh
 
-# Gitの変更状態がわかる ls。ls の代わりにコマンド `k` を実行するだけ。
-zinit light supercrabtree/k
+# git https://github.com/scmbreeze/scm_breeze
+#zinit light scmbreeze/scm_breeze
 
-# anyframeのセットアップ
+# anyframe https://github.com/mollifier/anyframe
 zinit light mollifier/anyframe
+
+# asdf https://github.com/asdf-vm/asdf
+zinit light asdf-vm/asdf
 
 # Ctrl+x -> b
 # peco でディレクトリの移動履歴を表示
 bindkey '^xb' anyframe-widget-cdr
-autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
-add-zsh-hook chpwd chpwd_recent_dirs
-
-# Ctrl+x -> r
-# peco でコマンドの実行履歴を表示
-bindkey '^xr' anyframe-widget-execute-history
 
 # Ctrl+x -> Ctrl+b
 # peco でGitブランチを表示して切替え
@@ -94,5 +81,15 @@ bindkey '^xg' anyframe-widget-cd-ghq-repository
 alias brew="PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin brew"
 # alias brew="PATH=/opt/homebrew/bin brew" # ARM
 
-eval "$(anyenv init -)"
+# theme https://starship.rs
+eval "$(starship init zsh)"
 
+autoload -U compinit
+compinit -u
+export PATH="/usr/local/opt/icu4c/bin:$PATH"
+
+export PATH="/usr/local/bin/Python3.9/bin:$PATH"
+source "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"
+
+# Fig post block. Keep at the bottom of this file.
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && . "$HOME/.fig/shell/zshrc.post.zsh"
